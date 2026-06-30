@@ -20,6 +20,7 @@
 
     init: function () {
       this.el = document.getElementById("tree-view");
+      this.host = this.el.parentElement; // .tree-host：CSS 控尺寸、不被 phylocanvas 釘住
       this.fallbackEl = document.getElementById("tree-fallback");
       this.supported = hasWebGL() && global.PhylocanvasModule && global.PhylocanvasModule.PhylocanvasGL;
       var self = this;
@@ -59,8 +60,9 @@
       var TreeTypes = global.PhylocanvasModule.TreeTypes || {};
       if (this.tree) { try { this.tree.destroy(); } catch (e) {} this.tree = null; }
       this.el.innerHTML = "";
-      var rect = this.el.getBoundingClientRect();
-      var size = { width: Math.max(200, rect.width), height: Math.max(200, rect.height) };
+      var rect = this.host.getBoundingClientRect();
+      var size = { width: Math.max(280, Math.round(rect.width) || 280),
+                   height: Math.max(420, Math.round(rect.height) || 480) };
 
       var self = this, model = this.model;
       this.tree = new PhylocanvasGL(this.el, {
@@ -85,7 +87,16 @@
         if (!self._suppress) self.onPick(node);
       };
 
-      if (this._ro) { try { this._ro.disconnect(); this._ro.observe(this.el); } catch (e) {} }
+      if (this._ro) { try { this._ro.disconnect(); this._ro.observe(this.host); } catch (e) {} }
+      // 待容器尺寸穩定後填滿畫面（避免只佔左側一小塊 / 上下被裁切）
+      requestAnimationFrame(function () { self.resize(); });
+      setTimeout(function () { self.resize(); }, 120);
+    },
+
+    // 讓整棵樹縮放到剛好填滿容器
+    fit: function () {
+      if (!this.tree) return;
+      try { this.tree.fitInCanvas(); } catch (e) { /* 某些版本可能無此方法 */ }
     },
 
     buildMapsAndStyles: function () {
@@ -153,10 +164,11 @@
 
     resize: function () {
       if (!this.tree) return;
-      var rect = this.el.getBoundingClientRect();
+      var rect = this.host.getBoundingClientRect();  // 量 host，避免量到被釘住的 #tree-view
       if (rect.width < 10 || rect.height < 10) return;
-      try { this.tree.resize(rect.width, rect.height); }
-      catch (e) { try { this.tree.setProps({ size: { width: rect.width, height: rect.height } }); } catch (e2) {} }
+      try { this.tree.setProps({ size: { width: Math.round(rect.width), height: Math.round(rect.height) } }); }
+      catch (e) { try { this.tree.resize(rect.width, rect.height); } catch (e2) {} }
+      this.fit();
     },
 
     exportPNG: function () {

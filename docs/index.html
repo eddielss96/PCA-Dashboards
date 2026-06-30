@@ -47,52 +47,60 @@
 
   <!-- 主介面 -->
   <main id="dashboard" class="dashboard" hidden>
-    <section class="panel pca-panel">
-      <div class="panel-head">
-        <h2 id="tadpole-title">蝌蚪 PCA</h2>
-        <div class="axis-ctrls">
-          <label>X <select id="tadpole-x" class="axis-select"></select></label>
-          <label>Y <select id="tadpole-y" class="axis-select"></select></label>
-          <button class="btn small dl" data-view="tadpole" title="下載此圖 PNG">PNG</button>
+    <!-- 兩張 PCA 並排，方便比較蝌蚪 vs 成體形態空間 -->
+    <div class="pca-row">
+      <section class="panel pca-panel">
+        <div class="panel-head">
+          <h2 id="tadpole-title">蝌蚪 PCA</h2>
+          <div class="axis-ctrls">
+            <label>X <select id="tadpole-x" class="axis-select"></select></label>
+            <label>Y <select id="tadpole-y" class="axis-select"></select></label>
+            <button class="btn small dl" data-view="tadpole" title="下載此圖 PNG">↓ PNG</button>
+          </div>
         </div>
+        <div id="tadpole-plot" class="plot"></div>
+        <div class="scree-wrap"><span class="scree-label">各 PC 變異解釋</span><div id="tadpole-scree" class="scree"></div></div>
+      </section>
+
+      <section class="panel pca-panel">
+        <div class="panel-head">
+          <h2 id="adult-title">成體 PCA</h2>
+          <div class="axis-ctrls">
+            <label>X <select id="adult-x" class="axis-select"></select></label>
+            <label>Y <select id="adult-y" class="axis-select"></select></label>
+            <button class="btn small dl" data-view="adult" title="下載此圖 PNG">↓ PNG</button>
+          </div>
+        </div>
+        <div id="adult-plot" class="plot"></div>
+        <div class="scree-wrap"><span class="scree-label">各 PC 變異解釋</span><div id="adult-scree" class="scree"></div></div>
+      </section>
+    </div>
+
+    <!-- 橫向圖例條（色盲友善：色 + 形）+ 資料集資訊 -->
+    <section class="panel legend-bar">
+      <div class="legend-left">
+        <span class="legend-title">亞科</span>
+        <ul id="legend" class="legend-chips"></ul>
+        <span class="legend-hint dim">顏色外也以<strong>形狀</strong>區辨；點選可切換顯示</span>
       </div>
-      <div id="tadpole-plot" class="plot"></div>
-      <div id="tadpole-scree" class="scree"></div>
+      <div id="dataset-meta" class="dataset-meta"></div>
     </section>
 
-    <section class="panel pca-panel">
-      <div class="panel-head">
-        <h2 id="adult-title">成體 PCA</h2>
-        <div class="axis-ctrls">
-          <label>X <select id="adult-x" class="axis-select"></select></label>
-          <label>Y <select id="adult-y" class="axis-select"></select></label>
-          <button class="btn small dl" data-view="adult" title="下載此圖 PNG">PNG</button>
-        </div>
-      </div>
-      <div id="adult-plot" class="plot"></div>
-      <div id="adult-scree" class="scree"></div>
-    </section>
-
+    <!-- 親緣樹獨佔整列、加高，避免被裁切 -->
     <section class="panel tree-panel">
       <div class="panel-head">
-        <h2>親緣關係樹</h2>
+        <h2>親緣關係樹 <span class="dim small">（點分支高亮整個 clade）</span></h2>
         <div class="axis-ctrls">
-          <button class="btn small dl-tree" title="下載樹 PNG">PNG</button>
+          <button class="btn small fit-tree" title="重設視角、填滿畫面">⤢ 重設視角</button>
+          <button class="btn small dl-tree" title="下載樹 PNG">↓ PNG</button>
         </div>
       </div>
-      <div id="tree-view" class="tree"></div>
+      <div class="tree-host"><div id="tree-view" class="tree"></div></div>
       <div id="tree-fallback" class="tree-fallback" hidden>
         <p>⚠️ 此環境無法使用 WebGL，無法繪製互動式親緣樹。</p>
         <p class="dim">PCA 圖仍可正常使用；點擊樹分支高亮 clade 的功能在此環境停用。</p>
       </div>
     </section>
-
-    <aside class="panel legend-panel">
-      <div class="panel-head"><h2>圖例（亞科）</h2></div>
-      <ul id="legend" class="legend"></ul>
-      <p class="dim small">顏色之外也以<strong>形狀</strong>區辨（色盲友善）。點圖例可切換顯示。</p>
-      <div id="dataset-meta" class="dataset-meta"></div>
-    </aside>
   </main>
 
   <!-- 物種資訊視窗 -->
