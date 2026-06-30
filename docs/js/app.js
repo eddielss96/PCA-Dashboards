@@ -30,7 +30,7 @@
       if (model.dataset.title) subtitle.textContent = model.dataset.title;
       var rep = model.joinReport;
       setStatus("已載入：" + rep.nTaxa + " 物種、" + model.viewOrder.length +
-        " 個 PCA 視圖、" + rep.nTree + " 個樹葉（join key 一致 ✓）", "");
+        " 個 PCA 視圖、" + rep.nTree + " 個樹葉（join key 一致 ✓）", "success");
       showDashboard();
       setTimeout(function () { setStatus(null); }, 4000);
     }).catch(function (e) {
@@ -84,6 +84,8 @@
     });
     var dlTree = document.querySelector(".dl-tree");
     if (dlTree) dlTree.addEventListener("click", function () { FD.TreeView.exportPNG(); });
+    var fitTree = document.querySelector(".fit-tree");
+    if (fitTree) fitTree.addEventListener("click", function () { FD.TreeView.resize(); });
   }
 
   function main() {

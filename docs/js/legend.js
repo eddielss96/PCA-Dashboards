@@ -46,7 +46,8 @@
     model.groups.forEach(function (g) {
       var li = document.createElement("li");
       li.dataset.value = g.value;
-      li.innerHTML = svgSymbol(g.symbol, g.color) +
+      li.title = "點選切換顯示／隱藏：" + g.label;
+      li.innerHTML = svgSymbol(g.symbol, g.color, 15) +
         '<span class="lbl">' + g.label + '</span>' +
         '<span class="cnt">' + (counts[g.value] || 0) + '</span>';
       li.addEventListener("click", function () {
@@ -56,15 +57,15 @@
       ul.appendChild(li);
     });
 
-    // 資料集中介資料
+    // 資料集中介資料（精簡、右對齊）
     var d = model.dataset, meta = document.getElementById("dataset-meta");
-    function row(k, v) { return v ? '<div class="row"><strong>' + k + '：</strong>' + v + '</div>' : ""; }
+    var bits = [];
+    if (d.doi) bits.push('DOI <a href="https://doi.org/' + d.doi + '" target="_blank" rel="noopener">' + d.doi + '</a>');
+    if (d.source_url) bits.push('<a href="' + d.source_url + '" target="_blank" rel="noopener">原始資料來源</a>');
+    if (d.created_with) bits.push('產生方式：' + d.created_with);
     meta.innerHTML =
-      row("資料集", d.title) +
-      (d.doi ? '<div class="row"><strong>DOI：</strong><a href="https://doi.org/' + d.doi + '" target="_blank" rel="noopener">' + d.doi + '</a></div>' : "") +
-      (d.source_url ? '<div class="row"><a href="' + d.source_url + '" target="_blank" rel="noopener">原始資料來源</a></div>' : "") +
-      row("產生方式", d.created_with) +
-      (d.citation ? '<div class="row dim">' + d.citation + '</div>' : "");
+      '<div class="row">' + bits.join(' · ') + '</div>' +
+      (d.citation ? '<span class="cite">' + d.citation + '</span>' : "");
   }
 
   Store.on("data", render);
