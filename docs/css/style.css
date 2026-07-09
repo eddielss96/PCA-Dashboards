@@ -189,10 +189,10 @@ h1, h2, h3 { font-weight: 650; letter-spacing: .01em; }
 /* ---- 分組欄位選單 + 顏色/形狀設定 ---- */
 .group-field-lbl { font-size: 12px; color: var(--ink-soft); display: inline-flex; align-items: center; gap: 5px; }
 .group-settings {
-  position: absolute; z-index: 45; margin-top: 6px; background: #fff; border: 1px solid var(--line-strong);
+  position: absolute; top: 100%; left: 12px; z-index: 46; margin-top: 6px; background: #fff; border: 1px solid var(--line-strong);
   border-radius: 10px; box-shadow: var(--shadow); padding: 12px 14px; max-height: 340px; overflow: auto; min-width: 280px;
 }
-.legend-bar { position: relative; }
+.legend-bar { position: relative; overflow: visible; }  /* 讓設定彈出層不被 .panel 的 overflow 裁掉 */
 .gs-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-weight: 650; font-size: 13px; margin-bottom: 8px; }
 .gs-row { display: grid; grid-template-columns: 1fr auto auto; gap: 8px; align-items: center; padding: 4px 0; }
 .gs-name { font-size: 13px; }
@@ -221,8 +221,9 @@ h1, h2, h3 { font-weight: 650; letter-spacing: .01em; }
 #side-panel-body .info-body { flex-direction: column; gap: 14px; }
 #side-panel-body .info-image-wrap { width: 100%; height: 220px; }
 #side-panel-toggle.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-body.has-side-panel .dashboard { margin-right: 340px; }
-@media (max-width: 720px) { .side-panel { width: 100%; } body.has-side-panel .dashboard { margin-right: 0; } }
+/* 面板固定在右側；用 body 右側 padding 預留空間，讓頂欄與內容一起左移、不被覆蓋 */
+body.has-side-panel { padding-right: 340px; }
+@media (max-width: 720px) { .side-panel { width: 100%; } body.has-side-panel { padding-right: 0; } }
 
 /* ---- 建立精靈 ---- */
 .builder { flex: 1; display: grid; grid-template-columns: 400px 1fr; gap: var(--gap); padding: var(--gap); min-height: 0; overflow: hidden; }

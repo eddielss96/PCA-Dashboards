@@ -46,17 +46,27 @@
   }
   function hideCard() { if (card) card.hidden = true; }
 
+  function reflow() {
+    // 內容寬度改變 → 讓 Plotly 圖與樹重新貼合
+    setTimeout(function () {
+      window.dispatchEvent(new Event("resize"));
+      if (global.FrogDash.TreeView) global.FrogDash.TreeView.resize();
+    }, 60);
+  }
   function openPanel(sid) {
     if (!Store.data) return;
     panelBody.innerHTML = '<div class="info-body">' + buildHTML(Store.data, sid) + '</div>';
+    var wasHidden = panel.hidden;
     panel.hidden = false;
     document.body.classList.add("has-side-panel");
     if (panelToggle) panelToggle.classList.add("active");
+    if (wasHidden) reflow();
   }
   function closePanel() {
     panel.hidden = true;
     document.body.classList.remove("has-side-panel");
     if (panelToggle) panelToggle.classList.remove("active");
+    reflow();
   }
 
   function init() {
