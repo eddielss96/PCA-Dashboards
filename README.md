@@ -12,6 +12,7 @@
   | `trilobites` | Drage & Pates 2025 | 三葉蟲頭部形態空間，762 物種，單一 PCA、無樹，依 Order 著色（viridis） |
   | `fishes` | Torgersen et al. 2023 | 下密西西比魚類體型 3D 幾何形態測量，232 標本，單一形態空間 + **科級親緣樹**（一個科 tip 對應該科所有標本），依主要類群 clade 著色。[doi:10.1038/s41598-023-48086-5](https://doi.org/10.1038/s41598-023-48086-5) |
   | `otoliths` | Van Damme et al. 2024 | 魚類 sagitta 耳石形態，697 種，**側視＋背視兩個形態空間** + 物種級親緣樹，GPA+PCA 由 R geomorph 於匯出階段算好；依體型分色、10 個生態欄位可切換分組。[doi:10.1093/biolinnean/blae085](https://doi.org/10.1093/biolinnean/blae085) |
+  | `turtles` | Stayton et al. 2018 | 硬殼龜殼形態，274 種（2722 標本、53 個 3D 地標），3D GPA→物種平均→PCA 由 R geomorph 算好 + 物種級親緣樹；依棲地（水生/陸生）分色，Family 可切換。[doi:10.1111/evo.13561](https://doi.org/10.1111/evo.13561) |
 
 ## 最高原則
 1. **無伺服器**：最終成品是純靜態網站，可直接放 GitHub Pages 永久運作，開啟不需後端、
