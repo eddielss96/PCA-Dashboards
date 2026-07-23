@@ -56,6 +56,13 @@
       "short": "脂鯉體型",
       "description": "116 種脂鯉目魚類體型 · 幾何形態測量 PCA + 物種級親緣樹（依科分色，13 科）",
       "zip": "data/characiform.zip"
+    },
+    {
+      "id": "scallops",
+      "title": "Scallop shell shape evolution (Sherratt, Serb & Adams 2017)",
+      "short": "扇貝殼形態",
+      "description": "123 種扇貝 · 左瓣＋右瓣兩個 3D 殼形態空間（202 地標，GPA→PCA）+ 物種級親緣樹（依生活習性分色）",
+      "zip": "data/scallop.zip"
     }
   ]
 }
